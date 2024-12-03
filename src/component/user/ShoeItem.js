@@ -1,5 +1,6 @@
-import { DataShoeItem } from "./ShoeItemData";
-import React from 'react';
+
+import React, { useState, useEffect } from "react";
+import api from "../../service/api";
 
 
 
@@ -83,7 +84,18 @@ function ShoeItems({ products }) {
 
 
 function ShoeItemList() {
-    const groupedData = groupByBrandAndName(DataShoeItem);
+    
+    const [groupedData, setGroupedData] = useState([]);
+    
+    useEffect(() => {
+        api.get('/products').then(response => { 
+            setGroupedData(groupByBrandAndName(response.data.result));
+        })
+        .catch(error => {
+            console.error(error.response.data.message);
+        });
+    }, []);
+    
 
     return (
         <div className="shoe-list">

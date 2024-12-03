@@ -1,24 +1,85 @@
-import React from 'react';
+
+import React, { useState } from "react";
+import api from "../service/api";
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from 'jwt-decode';
 
 function Login() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState(""); 
+    const [full_name, setFullName] = useState(""); 
+    const navigate = useNavigate();
+    
+
+    const handleLogin = (event) => {
+        event.preventDefault();
+        localStorage.removeItem("token");
+
+        
+        api.post("/auth/login", { email, password })
+          .then(response => {
+            localStorage.setItem("token", response.data.result.token); // Lưu token vào localStorage
+            const token = localStorage.getItem("token");    
+            const decodedToken = jwtDecode(token);
+
+            alert("Đăng nhập thành công!");
+            if (decodedToken.scope === "USER") {
+                navigate("/");
+            } else {
+                navigate("/auth/login");
+            }
+          })
+          .catch(error => {
+            alert(error.response.data.message);
+          });
+    };
+
+
+
+    const handleSignUp = (event) => {
+        event.preventDefault();
+        api.post("/users", { email, password, full_name })
+        .then((response) => {
+            alert("Đăng ký thành công!");
+            navigate("/auth/login");
+        }).catch((error) => {
+            alert(error.response.data.message);
+        });
+    };
+
     return (
         <div className="signup-login">
             <input type="checkbox" id="chk" aria-hidden="true" />
             <div className="signup">
-                <form>
+                <form onSubmit={handleSignUp}>
                     <label htmlFor="chk" aria-hidden="true">Sign up</label>
-                    <input type="text" name="txt" placeholder="User name" required />
-                    <input type="email" name="email" placeholder="Email" required />
-                    <input type="password" name="pswd" placeholder="PassWord" required />
-                    <button>Sign Up</button>
+                    <input type="text" name="txt" placeholder="User name" required 
+                    value={full_name}
+                    onChange={(e) => setFullName(e.target.value)}
+                    />
+                    <input type="email" name="email" placeholder="Email" required 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <input type="password" name="pswd" placeholder="PassWord" required 
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button type="submit">Sign Up</button>
                 </form>
             </div>
             <div className="login">
-                <form>
+                <form onSubmit={handleLogin}>
                     <label htmlFor="chk" aria-hidden="true">Login</label>
-                    <input type="email" name="email" placeholder="Email" required />
-                    <input type="password" name="pswd" placeholder="PassWord" required />
-                    <button>Login</button>
+                    <input type="email" name="email" placeholder="Email" required 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <input type="password" name="pswd" placeholder="PassWord" required 
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button type="submit">Login</button>
                 </form>
             </div>
         </div>
