@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import api from "../service/api";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from 'jwt-decode';
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -18,16 +17,9 @@ function Login() {
         
         api.post("/auth/login", { email, password })
           .then(response => {
-            localStorage.setItem("token", response.data.result.token); // Lưu token vào localStorage
-            const token = localStorage.getItem("token");    
-            const decodedToken = jwtDecode(token);
-
+            localStorage.setItem("token", response.data.result.token); // Lưu token vào localStorage  
             alert("Đăng nhập thành công!");
-            if (decodedToken.scope === "USER") {
-                navigate("/");
-            } else {
-                navigate("/auth/login");
-            }
+            window.location.href = "/";
           })
           .catch(error => {
             alert(error.response.data.message);
@@ -48,6 +40,7 @@ function Login() {
     };
 
     return (
+        <div className="signup-login-container">
         <div className="signup-login">
             <input type="checkbox" id="chk" aria-hidden="true" />
             <div className="signup">
@@ -82,6 +75,7 @@ function Login() {
                     <button type="submit">Login</button>
                 </form>
             </div>
+        </div>
         </div>
     );
 }

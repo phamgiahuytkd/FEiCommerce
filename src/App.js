@@ -1,33 +1,30 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 
 import './App.css';
-import ShoeItems from './component/user/ShoeItem';
-import Home from './component/user/home'
-import Login from './authenticate/Login';
+import MenuAdmin from './component/admin/MenuAdmin';
+import Menu from './component/user/Menu';
+import { jwtDecode } from 'jwt-decode';
+
 
 
 function App() {
+  const token = localStorage.getItem('token');
+  let role = null;
+  if (token){
+    const decodedToken = jwtDecode(token);
+    role = decodedToken.scope;
+  }
+
   return (
+    <div>
+      {role === 'ADMIN' ? (
+        <MenuAdmin />
+      ) : (
+        <Menu />
+      )}
+    </div>
 
-    <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-              <Link to="/auth/login">Login</Link>
-            </li>
-          </ul>
-        </nav>
-
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth/login" element={<Login />} />
-        </Routes>
-      </div>
-    </Router>
+    
 
   );
 }

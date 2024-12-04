@@ -98,13 +98,15 @@ function ShoeItemList() {
     
 
     return (
-        <div className="shoe-list">
-            {groupedData.map(item => (
-                <ShoeItems
-                    key={`${item.name}_${item.brand}`}
-                    products={item.products}
-                />
-            ))}
+        <div className="shoe-list-container">
+            <div className="shoe-list">
+                {groupedData.map(item => (
+                    <ShoeItems
+                        key={`${item.name}_${item.brand}`}
+                        products={item.products}
+                    />
+                ))}
+            </div>
         </div>
     );
 }

@@ -5,12 +5,19 @@
     font-family: 'Poppins', sans-serif;
 }
 
-body {
+/* body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 150vh;
     background: #131313;
+} */
+.shoe-list-container {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Căn giữa nội dung */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    height: 100%; /* Đảm bảo chiếm chiều cao toàn bộ */
 }
 
 .shoe-list{
