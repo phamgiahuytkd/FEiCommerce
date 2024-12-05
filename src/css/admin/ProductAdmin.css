@@ -1,7 +1,8 @@
 /* Container tổng */
 .product-admin-container {
-    padding: 20px;
-    background-color: #f4f4f4;
+  padding: 0;
+  margin: 0;
+  background-color: #f4f4f4;
   }
   
   /* Tiêu đề */
@@ -13,7 +14,13 @@
     text-align: left;
     width: 100%;
     box-sizing: border-box;
+    justify-content: space-between;
+    display: flex;
+    align-items: center; 
+    
   }
+
+  
   
   /* Bảng */
   .product-admin-table {
@@ -130,33 +137,35 @@
 
 
   /* Nút chỉnh sửa trong cột "Tùy chỉnh" */
-.product-admin-edit-container{
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  
-}
 
 
+.product-admin-title button,
 .product-admin-edit-button {
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
     padding: 5px 10px;
-    cursor: pointer;
-    display: flex;
     align-items: center;
-    gap: 5px;
     font-size: 14px;
-    transition: all 0.3s ease;
+    transition: all 0.5s ease;
   }
   
   .product-admin-edit-button i {
     font-size: 16px; /* Kích thước biểu tượng */
   }
-  
 
+  .product-admin-title button {
+    font-size: 30px; 
+    font-weight: bold;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0px 10px;
+  }
+
+
+  
   .product-admin-edit-button {
     border: none;
     background: none;
@@ -170,11 +179,13 @@
     object-fit: contain;
   }
 
-
+  .product-admin-title button:hover,
   .product-admin-edit-button:hover {
     background-color: #0056b3;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   }
 
 
+  /* slider bar  */
+  
   

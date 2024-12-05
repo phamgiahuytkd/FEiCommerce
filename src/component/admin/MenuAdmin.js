@@ -4,6 +4,8 @@ import ProductAdmin from './ProductAdmin';
 import Login from '../../authenticate/Login';
 import '../../css/admin/MenuAdmin.css';
 import UserAdmin from './UserAdmin';
+import OrderAdmin from './OrderAdmin';
+import OrderDetailsAdmin from './OrderDetailsAdmin';
 
 function MenuAdmin() {
   return (
@@ -24,7 +26,12 @@ function MenuAdmin() {
             </li>
             <li>
               <NavLink to="/admin/product" className={({ isActive }) => (isActive ? "active" : "")}>
-                Product
+                Sản phẩm
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/order" className={({ isActive }) => (isActive ? "active" : "")}>
+                Đơn hàng
               </NavLink>
             </li>
             <li>
@@ -41,7 +48,9 @@ function MenuAdmin() {
             <Route path="/" element={<HomeAdmin />} />
             <Route path="/admin/user" element={<UserAdmin />} />
             <Route path="/admin/product" element={<ProductAdmin />} />
+            <Route path="/admin/order" element={<OrderAdmin />} />
             <Route path="/auth/login" element={<Login />} />
+            <Route path="/admin/order-details/:orderId" element={<OrderDetailsAdmin />} />
           </Routes>
         </div>
       </Router>

@@ -72,7 +72,9 @@ function ShoeItems({ products }) {
                         </label>
                     ))}
                 </div>
-                <a href={`#buy-now-${selectedProduct.id}`}>Buy now</a>
+                {selectedProduct.stock === 1 ? (
+                    <a href={`#buy-now-${selectedProduct.id}`}>Buy now</a>
+                ): null}
             </div>
         </div>
     );

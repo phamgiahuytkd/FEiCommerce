@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../css/admin/ProductAdmin.css";
-import logo from "../../logo.svg"
+import logo from "../../logo.svg";
 import api from "../../service/api";
 
 
@@ -94,7 +94,7 @@ function ProductRow({ products, updateProductData }) {
           {selectedProduct.stock === 1 ? "Còn hàng" : "Hết hàng"}
         </span>
       </td>
-      <td className="product-admin-edit-container">
+      <td>
         <button className="product-admin-edit-button">
           <img src={logo} alt="Logo" className="product-admin-logo" />
         </button>
@@ -131,7 +131,7 @@ function ProductAdmin() {
 
   return (
     <div className="product-admin-container">
-      <h1 className="product-admin-title">Quản lý sản phẩm</h1>
+      <h1 className="product-admin-title"><span>Quản lý sản phẩm</span> <button>+</button></h1>    
       <table className="product-admin-table">
         <thead>
           <tr>
