@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import HomeAdmin from './HomeAdmin';
 import ProductAdmin from './ProductAdmin';
 import Login from '../../authenticate/Login';
 import '../../css/admin/MenuAdmin.css';
+import UserAdmin from './UserAdmin';
 
 function MenuAdmin() {
   return (
@@ -14,7 +14,12 @@ function MenuAdmin() {
           <ul>
             <li>
               <NavLink to="/" className={({ isActive }) => (isActive ? "active" : "")}>
-                Home
+                Trang chủ
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/user" className={({ isActive }) => (isActive ? "active" : "")}>
+                Xem người dùng
               </NavLink>
             </li>
             <li>
@@ -34,6 +39,7 @@ function MenuAdmin() {
         <div className="content">
           <Routes>
             <Route path="/" element={<HomeAdmin />} />
+            <Route path="/admin/user" element={<UserAdmin />} />
             <Route path="/admin/product" element={<ProductAdmin />} />
             <Route path="/auth/login" element={<Login />} />
           </Routes>
