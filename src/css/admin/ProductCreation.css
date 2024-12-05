@@ -1,0 +1,94 @@
+.product-creation-container {
+    padding: 20px;
+}
+
+.product-creation-container h1 {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.product-creation-form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.product-creation-form div {
+    margin-bottom: 15px;
+}
+
+.product-creation-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.product-creation-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.product-creation-form button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+.product-creation-form button:hover {
+    background-color: #218838;
+}
+
+/* Cập nhật phần chọn màu sắc */
+.color-selection-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.color-selection-container input[type="color"] {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 5px;
+}
+
+.color-selection-container input[type="text"] {
+    width: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.color-error {
+    color: red;
+    font-size: 14px;
+}
+
+/* Cập nhật phần checkbox "Còn hàng" */
+.checkbox-selection-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-selection-container input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.checkbox-selection-container span {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+}

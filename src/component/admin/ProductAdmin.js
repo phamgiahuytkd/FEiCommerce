@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import "../../css/admin/ProductAdmin.css";
 import logo from "../../logo.svg";
 import api from "../../service/api";
+import SearchForm from "./SearchForm";
+import FormComponent from "./SearchForm";
+import { useNavigate } from "react-router-dom";
 
 
 const groupByBrandAndName = (items) => {
@@ -25,6 +28,7 @@ const groupByBrandAndName = (items) => {
 
 
 function ProductRow({ products, updateProductData }) {
+  
   const [selectedProduct, setSelectedProduct] = React.useState(products[0]); // Default to the first product
 
   const handleColorChange = (colour) => {
@@ -103,35 +107,85 @@ function ProductRow({ products, updateProductData }) {
   );
 }
 
-function ProductAdmin() {
+const ProductAdmin = () => {
+  const [isFormVisible, setIsFormVisible] = useState(false);
   const [groupedData, setGroupedData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const navigate = useNavigate();
+
+  const handleAdd = () => {
+    navigate(`/admin/add-product`); // Đường dẫn tới trang chi tiết đơn hàng
+  };
+
+  const toggleFormVisibility = () => {
+    setIsFormVisible(!isFormVisible);
+  };
+
+  const closeForm = () => {
+    setIsFormVisible(false);
+  };
 
   useEffect(() => {
-    api.get('/products').then(response => { 
-      setGroupedData(groupByBrandAndName(response.data.result));
-    })
-    .catch(error => {
-      console.error(error.response.data.message);
-    });
+    api
+      .get("/products")
+      .then((response) => {
+        const data = groupByBrandAndName(response.data.result);
+        setGroupedData(data);
+        setFilteredData(data); // Khi mới load, hiển thị tất cả dữ liệu
+      })
+      .catch((error) => {
+        console.error(error.response.data.message);
+      });
   }, []);
 
   const updateProductData = (updatedProduct) => {
-    setGroupedData(prevData => {
-      // Cập nhật sản phẩm trong groupedData
-      return prevData.map(group => {
-        return {
-          ...group,
-          products: group.products.map(product => 
-            product.id === updatedProduct.id ? updatedProduct : product
-          )
-        };
+    setGroupedData((prevData) =>
+      prevData.map((group) => ({
+        ...group,
+        products: group.products.map((product) =>
+          product.id === updatedProduct.id ? updatedProduct : product
+        ),
+      }))
+    );
+    setFilteredData((prevData) =>
+      prevData.map((group) => ({
+        ...group,
+        products: group.products.map((product) =>
+          product.id === updatedProduct.id ? updatedProduct : product
+        ),
+      }))
+    );
+  };
+
+  const handleSearch = (searchData) => {
+    const { name, brand, minPrice, maxPrice } = searchData;
+
+    const filtered = groupedData.filter((group) => {
+      return group.products.some((product) => {
+        // Kiểm tra tên và thương hiệu
+        const matchesName = name ? product.name.toLowerCase().includes(name.toLowerCase()) : true;
+        const matchesBrand = brand ? product.brand.toLowerCase().includes(brand.toLowerCase()) : true;
+        
+        // Kiểm tra giá
+        const matchesMinPrice = minPrice ? product.price >= parseFloat(minPrice) : true;
+        const matchesMaxPrice = maxPrice ? product.price <= parseFloat(maxPrice) : true;
+
+        return matchesName && matchesBrand && matchesMinPrice && matchesMaxPrice;
       });
     });
+
+    setFilteredData(filtered); // Cập nhật dữ liệu đã lọc
   };
 
   return (
     <div className="product-admin-container">
-      <h1 className="product-admin-title"><span>Quản lý sản phẩm</span> <button>+</button></h1>    
+      <h1 className="product-admin-title">
+        Quản lý sản phẩm
+        <div>
+          <button onClick={handleAdd}>+</button>
+          <button onClick={toggleFormVisibility}>0</button>
+        </div>
+      </h1>
       <table className="product-admin-table">
         <thead>
           <tr>
@@ -140,21 +194,24 @@ function ProductAdmin() {
             <th>Thương hiệu</th>
             <th>Màu sắc</th>
             <th>Trạng thái</th>
-            <th>Tùy chỉnh</th> {/* Cột mới */}
+            <th>Tùy chỉnh</th>
           </tr>
         </thead>
         <tbody>
-          {groupedData.map(item => (
+          {filteredData.map((item) => (
             <ProductRow
               key={`${item.name}_${item.brand}`}
               products={item.products}
-              updateProductData={updateProductData} // Truyền hàm cập nhật dữ liệu lên
+              updateProductData={updateProductData}
             />
           ))}
         </tbody>
       </table>
+      <SearchForm isVisible={isFormVisible} onClose={closeForm} onSubmit={handleSearch} />
     </div>
   );
-}
+};
+
+
 
 export default ProductAdmin;
