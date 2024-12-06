@@ -3,7 +3,6 @@ import "../../css/admin/ProductAdmin.css";
 import logo from "../../logo.svg";
 import api from "../../service/api";
 import SearchForm from "./SearchForm";
-import FormComponent from "./SearchForm";
 import { useNavigate } from "react-router-dom";
 
 
@@ -30,6 +29,16 @@ const groupByBrandAndName = (items) => {
 function ProductRow({ products, updateProductData }) {
   
   const [selectedProduct, setSelectedProduct] = React.useState(products[0]); // Default to the first product
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate(`/admin/details-product`, {
+      state: {
+        name: selectedProduct.name,
+        brand: selectedProduct.brand,
+      },
+    });
+  };
 
   const handleColorChange = (colour) => {
     const newProduct = products.find(product => product.colour === colour);
@@ -99,7 +108,7 @@ function ProductRow({ products, updateProductData }) {
         </span>
       </td>
       <td>
-        <button className="product-admin-edit-button">
+        <button className="product-admin-edit-button" onClick={handleButtonClick}>
           <img src={logo} alt="Logo" className="product-admin-logo" />
         </button>
       </td>

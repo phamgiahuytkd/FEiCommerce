@@ -7,6 +7,7 @@ import UserAdmin from './UserAdmin';
 import OrderAdmin from './OrderAdmin';
 import OrderDetailsAdmin from './OrderDetailsAdmin';
 import ProductCreation from './ProductCreation';
+import ProductDetailsAdmin from './ProductDetailsAdmin';
 
 function MenuAdmin() {
   return (
@@ -53,6 +54,7 @@ function MenuAdmin() {
             <Route path="/auth/login" element={<Login />} />
             <Route path="/admin/order-details/:orderId" element={<OrderDetailsAdmin />} />
             <Route path="/admin/add-product" element={<ProductCreation />} />
+            <Route path="/admin/details-product" element={<ProductDetailsAdmin />} />
           </Routes>
         </div>
       </Router>
